@@ -22,12 +22,13 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 
-// 터미널에서 아래 커멘드로 GET 요청을 하면 위 코드 라인에서 응답합니다.
-// curl -X GET "127.0.0.1:3000/users"
 app.get("/users", (req, res) => {
-  res.json(users);
-  // Content-Type: application/json; charset=utf-8
-  // [{"id":1,"name":"alice"},{"id":2,"name":"burky"},{"id":3,"name":"chris"}]
+  req.query.limit = req.query.limit || 10; // undefined이면 10으로 저장
+  const limit = parseInt(req.query.limit, 10); // 10진수로 변환
+  // 숫자 형변환에 실패하여 NaN이 들어간 경우 400 리턴
+  if (Number.isNaN(limit)) return res.status(400).end();
+
+  res.json(users.slice(0, limit));
 });
 
 module.exports = app;
