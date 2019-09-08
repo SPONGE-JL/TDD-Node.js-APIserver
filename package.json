@@ -1,16 +1,14 @@
 {
   "name": "tdd-nodejs-apiserver",
-  "version": "1.0.0",
-  "description": "For RestAPI",
-  "main": "index.js",
-  "repository": "https://github.com/devJRL/TDD-Node.js-APIserver.git",
-  "author": "devJRL <dev2sponge@gmail.com>",
-  "license": "UNLICENSED",
-  "private": false,
-  "dependencies": {
-    "express": "^4.17.1"
-  },
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "morgan": "^1.9.1"
   }
 }

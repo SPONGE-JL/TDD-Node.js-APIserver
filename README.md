@@ -84,11 +84,20 @@ Express.js 프로젝트 생성
   yarn init
   # 프로젝트에 Express.js 추가
   yarn add express
+  yarn add express-generator
 
-  # index.js 작성
-  # package.json에 start script 추가
+  # Express 프로젝트 생성
+  express --no-view -f .
 
   # Express 서버 시작
   yarn start
   # App listening on port 3000!
+```
+
+미들웨어 설치
+
+```bash
+  # Express 프로젝트가 생성될때 기본으로 사용하도록 지정된 모듈
+  yarn add cookie-parser
+  yarn add morgan
 ```
