@@ -101,3 +101,19 @@ Express.js 프로젝트 생성
   yarn add cookie-parser
   yarn add morgan
 ```
+
+### TDD (Test Driven Development, 테스트 주도 개발)
+
+TDD 개발을 위하여 node에서 제공하는 라이브러리
+
+- [mocha.js](https://mochajs.org/) : 테스트 코드를 돌려주는 테스트 러너
+  - TestSuite : 테스트 환경을 꾸며주는 내부모듈 ~ describe()로 구현
+  - TestCase : 실제 테스트코드 ~ it()
+
+```bash
+  # 설치 : 개발환경에서만 사용하는 의존모듈임을 명시하여 설치
+  yarn add mocha --save-dev
+
+  # 실행 : node가 아닌 mocha 라이브러리로 실행
+  node_modules/.bin/mocha ./tdd_samples/mocha_sp.js
+```
