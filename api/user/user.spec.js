@@ -94,8 +94,7 @@ describe("DELETE /users/1", () => {
 });
 
 // # TDD-3 POST
-// > mocha의 only함수를 이용하여 단독체크
-describe.only("POST /users 는", () => {
+describe("POST /users 는", () => {
   let name = "daniel";
   describe("성공시", () => {
     let body;
@@ -175,7 +174,7 @@ describe("PUT /users/:id 는", () => {
     it("이름이 중복일 경우 409 응답한다.", done => {
       request(app)
         .put("/users/3")
-        .send({ name: "chris" })
+        .send({ name: "chenn" })
         .expect(409)
         .end(done);
     });
