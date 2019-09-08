@@ -23,10 +23,15 @@ const show = (req, res) => {
   const p_id = parseInt(req.params.id, 10); // 문자열 id를 숫자열로 변환
   if (Number.isNaN(p_id)) return res.status(400).end(); // 숫자열 변환 실패시 NaN이 되므로 400 반환
 
-  const f_user = users.filter(user => user.id === p_id)[0]; // 숫자값에 해당하는 배열을 추출
-  if (!f_user) return res.status(404).end(); // 유저를 찾을 수 없어서 존재하지 않는 경우 404 반환
-
-  res.json(f_user); // JSON 형식으로 반환
+  // SELECT * FROM users WHERE id = 1;
+  models.User.findOne({
+    where: { id: p_id }
+  }).then(user => {
+    // 유저를 찾을 수 없어서 존재하지 않는 경우 404 반환
+    if (!user) return res.status(404).end();
+    // JSON 형식으로 반환
+    res.json(user);
+  });
 };
 
 // # TDD-2 DELETE

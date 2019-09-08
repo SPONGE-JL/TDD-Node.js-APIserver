@@ -8,8 +8,7 @@ const app = require("../../app");
 const models = require("../../data/sequelize-define");
 
 // # TDD-1 GET
-// > mocha의 only함수를 이용하여 단독체크
-describe.only("GET /users 는", () => {
+describe("GET /users 는", () => {
   describe("성공시", () => {
     // ! DB sync (데이터 동기화를 동기처리)
     before(() => models.sequelize.sync({ force: true }));
@@ -46,7 +45,8 @@ describe.only("GET /users 는", () => {
   });
 });
 
-describe("GET /users/:id 는", () => {
+// > mocha의 only함수를 이용하여 단독체크
+describe.only("GET /users/:id 는", () => {
   describe("성공시", () => {
     it("id가 1인 유저 객체를 반환한다", done => {
       request(app)
