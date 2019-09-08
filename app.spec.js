@@ -135,6 +135,7 @@ describe("PUT /users/:id 는", () => {
       request(app)
         .put("/users/3")
         .send({ name })
+        .expect(201)
         .end((err, res) => {
           res.body.should.have.property("name", name);
           done();
@@ -166,8 +167,8 @@ describe("PUT /users/:id 는", () => {
     });
     it("이름이 중복일 경우 409 응답한다.", done => {
       request(app)
-        .put("/users/5")
-        .send({ name: "burky" })
+        .put("/users/3")
+        .send({ name: "chris" })
         .expect(409)
         .end(done);
     });

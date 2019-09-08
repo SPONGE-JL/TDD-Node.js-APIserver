@@ -4,72 +4,20 @@
 const express = require("express");
 const router = express.Router();
 
-// 아래 배열은 추후 DB에서 가져오는 정보로 대체될 예정입니다.
-let users = [
-  { id: 1, name: "alice" },
-  { id: 2, name: "burky" },
-  { id: 3, name: "chris" }
-];
+const ctrl = require("./user.ctrl");
 
 // # TDD-1 GET
-router.get("/", (req, res) => {
-  req.query.limit = req.query.limit || 10; // undefined이면 10으로 저장
+router.get("/", ctrl.index);
 
-  const limit = parseInt(req.query.limit, 10); // 10진수로 변환
-  if (Number.isNaN(limit)) return res.status(400).end(); // 숫자 형변환에 실패하여 NaN이 들어간 경우 400 리턴
-
-  res.json(users.slice(0, limit));
-});
-
-router.get("/:id", (req, res) => {
-  const p_id = parseInt(req.params.id, 10); // 문자열 id를 숫자열로 변환
-  if (Number.isNaN(p_id)) return res.status(400).end(); // 숫자열 변환 실패시 NaN이 되므로 400 반환
-
-  const f_user = users.filter(user => user.id === p_id)[0]; // 숫자값에 해당하는 배열을 추출
-  if (!f_user) return res.status(404).end(); // 유저를 찾을 수 없어서 존재하지 않는 경우 404 반환
-
-  res.json(f_user); // JSON 형식으로 반환
-});
+router.get("/:id", ctrl.show);
 
 // # TDD-2 DELETE
-router.delete("/:id", (req, res) => {
-  const p_id = parseInt(req.params.id, 10); // 문자열 id를 숫자열로 반환
-  if (Number.isNaN(p_id)) return res.status(400).end(); // 숫자열 변호나 실패시 NaN이 되므로 400 반환
-
-  users = users.filter(user => user.id !== p_id);
-  res.status(204).end();
-});
+router.delete("/:id", ctrl.destroy);
 
 // # TDD-3 POST
-router.post("/", (req, res) => {
-  const name = req.body.name;
-  if (!name) return res.status(400).end(); // Name값이 비어있는 경우 400 리턴
-
-  const conflicLength = users.filter(user => user.name === name).length;
-  if (conflicLength) return res.status(409).end(); // 중복된 경우 409 리턴
-
-  const id = Date.now();
-  const user = { id, name };
-  users.push(user);
-
-  res.status(201).json(user);
-});
+router.post("/", ctrl.create);
 
 // # TDD-4 PUT
-router.put("/:id", (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  if (Number.isNaN(id)) return res.status(400).end(); // 숫자열 변환에 실패한 경우 400 리턴
+router.put("/:id", ctrl.update);
 
-  const name = req.body.name;
-  if (!name) return res.status(400).end(); // 전달받은 문자열이 없을 경우 400 리턴
-
-  const isConflict = users.filter(user => user.name === name).length;
-  if (isConflict) return res.status(409).end(); // 중복되는 경우 409 리턴
-
-  const user = users.filter(user => user.id === id)[0]; // 검색
-  if (!user) return res.status(404).end(); // 검색결과 없는 유저일 경우  404 리턴
-
-  user.name = name; // 수정
-
-  res.json(user);
-});
+module.exports = router;
