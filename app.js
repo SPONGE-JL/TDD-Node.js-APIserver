@@ -52,8 +52,12 @@ app.delete("/users/:id", (req, res) => {
   res.status(204).end();
 });
 
+// # TDD-3 POST
 app.post("/users", (req, res) => {
   const name = req.body.name;
+  if (!name) return res.status(400).end(); // Name값이 비어있는 경우 400 리턴
+  const conflicLength = users.filter(user => user.name === name).length;
+  if (conflicLength) return res.status(409).end(); // 중복된 경우 409 리턴
   const id = Date.now();
   const user = { id, name };
   users.push(user);
