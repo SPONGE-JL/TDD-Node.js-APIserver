@@ -7,14 +7,15 @@ const request = require("supertest");
 const app = require("../../app");
 const models = require("../../data/sequelize-define");
 
+// ! DB sync (데이터 동기화를 동기처리)
+before(() => models.sequelize.sync({ force: true }));
+// ! Insert Sample Data
+const users = [{ name: "alice" }, { name: "bek" }, { name: "chris" }];
+before(() => models.User.bulkCreate(users));
+
 // # TDD-1 GET
 describe("GET /users 는", () => {
   describe("성공시", () => {
-    // ! DB sync (데이터 동기화를 동기처리)
-    before(() => models.sequelize.sync({ force: true }));
-    // ! Insert Sample Data
-    const users = [{ name: "alice" }, { name: "bek" }, { name: "chris" }];
-    before(() => models.User.bulkCreate(users));
     // ? TestCase
     it("유저 객체를 담은 배열로 응답한다", done => {
       request(app)
@@ -73,8 +74,7 @@ describe("GET /users/:id 는", () => {
 });
 
 // # TDD-2 DELETE
-// > mocha의 only함수를 이용하여 단독체크
-describe.only("DELETE /users/1", () => {
+describe("DELETE /users/1", () => {
   describe("성공시", () => {
     it("204를 응답한다.", done => {
       request(app)
@@ -94,7 +94,8 @@ describe.only("DELETE /users/1", () => {
 });
 
 // # TDD-3 POST
-describe("POST /users 는", () => {
+// > mocha의 only함수를 이용하여 단독체크
+describe.only("POST /users 는", () => {
   let name = "daniel";
   describe("성공시", () => {
     let body;

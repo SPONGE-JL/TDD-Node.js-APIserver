@@ -9,7 +9,10 @@ const sequelize = new Sequelize({
 
 // Sequilze Model define
 const User = sequelize.define("User", {
-  name: Sequelize.DataTypes.STRING
+  name: {
+    unique: true,
+    type: Sequelize.DataTypes.STRING
+  }
 });
 
 module.exports = { Sequelize, sequelize, User };

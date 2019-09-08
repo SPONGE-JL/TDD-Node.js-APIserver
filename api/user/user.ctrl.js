@@ -53,14 +53,16 @@ const create = (req, res) => {
   const name = req.body.name;
   if (!name) return res.status(400).end(); // Name값이 비어있는 경우 400 리턴
 
-  const conflicLength = users.filter(user => user.name === name).length;
-  if (conflicLength) return res.status(409).end(); // 중복된 경우 409 리턴
-
-  const id = Date.now();
-  const user = { id, name };
-  users.push(user);
-
-  res.status(201).json(user);
+  // INSERT INTO users (`name`) VALUES('daniel')
+  models.User.create({ name })
+    .then(user => {
+      res.status(201).json(user);
+    })
+    .catch(err => {
+      if (err.name === "SequelizeUniqueConstraintError")
+        return res.status(409).end();
+      else return res.status(500).end();
+    });
 };
 
 // # TDD-4 PUT
