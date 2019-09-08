@@ -126,3 +126,12 @@ TDD 개발을 위하여 node에서 제공하는 라이브러리
   # 설치 : 개발환경에서만 사용하는 의존모듈임을 명시하여 설치
   yarn add should --save-dev
 ```
+
+- `통합테스트` : [supertest.js](https://github.com/visionmedia/supertest)
+  - node 서버를 내부에서 만들어 낸 뒤에, 자체적으로 웹 검증 테스트를 하는 모듈
+  - 사용방법은 위 링크의 Example을 참고하여 확인합니다.
+
+```bash
+  # 설치 : 개발환경에서만 사용하는 의존모듈임을 명시하여 설치
+  yarn add supertest --save-dev
+```
