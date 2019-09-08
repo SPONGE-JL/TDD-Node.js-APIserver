@@ -39,8 +39,13 @@ const destroy = (req, res) => {
   const p_id = parseInt(req.params.id, 10); // 문자열 id를 숫자열로 반환
   if (Number.isNaN(p_id)) return res.status(400).end(); // 숫자열 변호나 실패시 NaN이 되므로 400 반환
 
-  users = users.filter(user => user.id !== p_id);
-  res.status(204).end();
+  // DELETE FROM users WHERE id = 1;
+  models.User.destroy({
+    where: { id: p_id }
+  }).then(user => {
+    if (!user) return res.status(409).end();
+    res.status(204).end();
+  });
 };
 
 // # TDD-3 POST

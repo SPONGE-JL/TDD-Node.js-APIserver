@@ -45,8 +45,7 @@ describe("GET /users 는", () => {
   });
 });
 
-// > mocha의 only함수를 이용하여 단독체크
-describe.only("GET /users/:id 는", () => {
+describe("GET /users/:id 는", () => {
   describe("성공시", () => {
     it("id가 1인 유저 객체를 반환한다", done => {
       request(app)
@@ -74,7 +73,8 @@ describe.only("GET /users/:id 는", () => {
 });
 
 // # TDD-2 DELETE
-describe("DELETE /users/1", () => {
+// > mocha의 only함수를 이용하여 단독체크
+describe.only("DELETE /users/1", () => {
   describe("성공시", () => {
     it("204를 응답한다.", done => {
       request(app)
