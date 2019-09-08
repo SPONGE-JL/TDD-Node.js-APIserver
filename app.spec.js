@@ -7,7 +7,7 @@ const request = require("supertest");
 
 const app = require("./app");
 
-// # TDD-1
+// # TDD-1 GET
 describe("GET /users 는", () => {
   describe("성공시", () => {
     // ? TestCase
@@ -40,7 +40,6 @@ describe("GET /users 는", () => {
   });
 });
 
-// # TDD-2
 describe("GET /users/1 는", () => {
   describe("성공시", () => {
     it("id가 1인 유저 객체를 반환한다", done => {
@@ -63,6 +62,18 @@ describe("GET /users/1 는", () => {
       request(app)
         .get("/users/99")
         .expect(404)
+        .end(done);
+    });
+  });
+});
+
+// # TDD-2 DELETE
+describe("DELETE /users/1", () => {
+  describe("성공시", () => {
+    it("204를 응답한다.", done => {
+      request(app)
+        .delete("/users/1")
+        .expect(204)
         .end(done);
     });
   });
