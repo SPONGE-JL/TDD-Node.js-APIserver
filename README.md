@@ -15,20 +15,19 @@ Node.JS기반의 RestAPI WebServer 구현하기
 
 **HTTP Status Code**
 
-- _1 x x : 아직 처리중_
-- _2 x x : 결과 리턴 (정상)_
+- _1 x x : 전송 프로토콜 수준의 정보교환_
+- _2 x x : 클라이언트 요청이 성공적으로 수행됨_
   - `200` : 성공(success) ~ `GET`, `PUT`
   - `201` : 작성(created) ~ `POST`
   - `204` : 폐기(no-contents) ~ `DELETE`
-- _3 x x : 연결 종료_
-- _4 x x : 클라이언트 측 문제 (요청방법의 문제)_
-  - `400` : 잘못된 요청 (Bad Request) - ex. parameter error
-  - `401` : 접근 권한 없음 (Unauthorized) - ex. login & no-login
-  - `403` : 조회 권한 없음 (Unauthorized) - ex. user & admin permission
-  - `404` : 찾을 수 없음 (Not found) - ex. no server side page
-  - `409` : 충돌 (Conflict) - ex. already created resource
-- _5 x x : 서버 측 문제 (서버처리방법의 문제)_
-
+- _3 x x : 클라이언트 요청을 완료하기 위해 추가 행동이 필요함_
+- _4 x x : 클라이언트의 잘못된 요청_
+  - `400` : 잘못된 요청 (Bad Request) - ex. Parameter Error
+  - `401` : 접근 권한 없음 (Unauthorized) - ex. Login-user & Guest-user
+  - `403` : 조회 권한 없음 (Unauthorized) - ex. User & Admin permission
+  - `404` : 찾을 수 없음 (Not found) - ex. No resource is detected.
+  - `409` : 충돌 (Conflict) - ex. Resouce is already created
+- _5 x x : 서버 측 처리방법에서 오류 발생하여 클라이언트 요청을 처리하지 못함_
   - `500` : 서버 에러 (Internal server error)
 
 ## History
