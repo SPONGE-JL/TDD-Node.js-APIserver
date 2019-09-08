@@ -100,6 +100,13 @@ Express.js 프로젝트 생성
   # Express 프로젝트가 생성될때 기본으로 사용하도록 지정된 모듈
   yarn add cookie-parser
   yarn add morgan
+
+  # Reqeust Body 객체를 사용하기 위한 모듈
+  yarn add body-parser
+    ### << in app.js
+    # const bodyParser = require("bady-parser");
+    # app.use(bodyParser.json());
+    # app.use(bodyParser.urlendcoed({ extended: true }));
 ```
 
 ### TDD (Test Driven Development, 테스트 주도 개발)

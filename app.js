@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const logger = require("morgan");
 
 const indexRouter = require("./routes/index");
@@ -19,6 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
 
@@ -46,6 +50,14 @@ app.delete("/users/:id", (req, res) => {
   if (Number.isNaN(p_id)) return res.status(400).end(); // 숫자열 변호나 실패시 NaN이 되므로 400 반환
   users = users.filter(user => user.id !== p_id);
   res.status(204).end();
+});
+
+app.post("/users", (req, res) => {
+  const name = req.body.name;
+  const id = Date.now();
+  const user = { id, name };
+  users.push(user);
+  res.status(201).json(user);
 });
 
 module.exports = app;
