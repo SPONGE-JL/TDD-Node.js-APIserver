@@ -4,7 +4,34 @@
 
 Node.JS기반의 RestAPI WebServer 구현하기
 
-## Command History
+### `RestAPI`를 위한 기초 개념
+
+**HTTP Method를 이용한 웹서버 자원관리에 대한 `행위`를 명시하는 API : `동사`**
+
+- `GET` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 자원조회 | SELECT(READ)
+- `POST`&nbsp;&nbsp;&nbsp;&nbsp; | 자원생성 | INSERT(CREATE)
+- `PUT` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 자원수정 | UPDATE
+- `DELETE` | 자원삭제 | DELETE
+
+**HTTP Status Code**
+
+- _1 x x : 아직 처리중_
+- _2 x x : 결과 리턴 (정상)_
+  - `200` : 성공(success) ~ `GET`, `PUT`
+  - `201` : 작성(created) ~ `POST`
+  - `204` : 폐기(no-contents) ~ `DELETE`
+- _3 x x : 연결 종료_
+- _4 x x : 클라이언트 측 문제 (요청방법의 문제)_
+  - `400` : 잘못된 요청 (Bad Request) - ex. parameter error
+  - `401` : 접근 권한 없음 (Unauthorized) - ex. login & no-login
+  - `403` : 조회 권한 없음 (Unauthorized) - ex. user & admin permission
+  - `404` : 찾을 수 없음 (Not found) - ex. no server side page
+  - `409` : 충돌 (Conflict) - ex. already created resource
+- _5 x x : 서버 측 문제 (서버처리방법의 문제)_
+
+  - `500` : 서버 에러 (Internal server error)
+
+## History
 
 ### 프로젝트 생성 및 형상관리(git) 적용
 
@@ -34,28 +61,34 @@ Node.JS기반의 RestAPI WebServer 구현하기
   git push origin rest
 ```
 
-### RestAPI & CRUD
+### Express.js 프로젝트 생성하기
 
-**HTTP Method를 이용한 웹서버 자원관리에 대한 `행위`를 명시하는 API : `동사`**
+개발 환경 구성
 
-- `GET` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 자원조회 | SELECT(READ)
-- `POST`&nbsp;&nbsp;&nbsp;&nbsp; | 자원생성 | INSERT(CREATE)
-- `PUT` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 자원수정 | UPDATE
-- `DELETE` | 자원삭제 | DELETE
+- [Node.js 설치](https://nodejs.org/ko/download/)
+- [npm 설치](https://www.npmjs.com/get-npm)
+- [yarn 설치](https://yarnpkg.com/lang/en/docs/install/#mac-stable)
+- [Mac에서 간단하게 Node.js, npm, yarn 설치](https://junhobaik.github.io/install-node-yarn/)
 
-**HTTP Status Code**
+```bash
+  # 터미널에서 설치확인
+  node -v # v12.8.0
+  npm -v  # 6.10.2
+  yarn -v # 1.16.0
+```
 
-- _1 x x : 아직 처리중_
-- _2 x x : 결과 리턴 (정상)_
-  - `200` : 성공(success) ~ `GET`, `PUT`
-  - `201` : 작성(created) ~ `POST`
-  - `204` : 폐기(no-contents) ~ `DELETE`
-- _3 x x : 연결 종료_
-- _4 x x : 클라이언트 측 문제 (요청방법의 문제)_
-  - `400` : 잘못된 요청 (Bad Request) - ex. parameter error
-  - `401` : 접근 권한 없음 (Unauthorized) - ex. login & no-login
-  - `403` : 조회 권한 없음 (Unauthorized) - ex. user & admin permission
-  - `404` : 찾을 수 없음 (Not found) - ex. no server side page
-  - `409` : 충돌 (Conflict) - ex. already created resource
-- _5 x x : 서버 측 문제 (서버처리방법의 문제)_
-  - `500` : 서버 에러 (Internal server error)
+Express.js 프로젝트 생성
+
+```bash
+  # 프로젝트 관리 시작
+  yarn init
+  # 프로젝트에 Express.js 추가
+  yarn add express
+
+  # index.js 작성
+  # package.json에 start script 추가
+
+  # Express 서버 시작
+  yarn start
+  # App listening on port 3000!
+```
