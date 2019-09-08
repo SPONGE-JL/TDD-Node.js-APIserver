@@ -106,7 +106,7 @@ Express.js 프로젝트 생성
 
 TDD 개발을 위하여 node에서 제공하는 라이브러리
 
-- [mocha.js](https://mochajs.org/) : 테스트 코드를 돌려주는 테스트 러너
+- `단위테스트용 러너` : [mocha.js](https://mochajs.org/)
   - TestSuite : 테스트 환경을 꾸며주는 내부모듈 ~ describe()로 구현
   - TestCase : 실제 테스트코드 ~ it()
 
@@ -116,4 +116,13 @@ TDD 개발을 위하여 node에서 제공하는 라이브러리
 
   # 실행 : node가 아닌 mocha 라이브러리로 실행
   node_modules/.bin/mocha ./tdd_samples/mocha_sp.js
+```
+
+- `단위테스트 내부 검증용` : [should.js](https://github.com/shouldjs/should.js)
+  - Node 공식 문서에서도 assert가 아닌 Third party library인 `should`를 사용하라고 적극권장
+  - 검증(assertion) 라이브러리로, `가독성 높은 테스트 코드를 만들 수 있다`는 장점
+
+```bash
+  # 설치 : 개발환경에서만 사용하는 의존모듈임을 명시하여 설치
+  yarn add should --save-dev
 ```
