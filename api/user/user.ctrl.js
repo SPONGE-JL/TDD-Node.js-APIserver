@@ -2,12 +2,8 @@
  * Router -> Controller -> API Logic
  */
 
-// 아래 배열은 추후 DB에서 가져오는 정보로 대체될 예정입니다.
-let users = [
-  { id: 1, name: "alice" },
-  { id: 2, name: "burky" },
-  { id: 3, name: "chris" }
-];
+// DB model
+const models = require("../../data/sequelize-define");
 
 // # TDD-1 GET
 const index = (req, res) => {
@@ -16,7 +12,10 @@ const index = (req, res) => {
   const limit = parseInt(req.query.limit, 10); // 10진수로 변환
   if (Number.isNaN(limit)) return res.status(400).end(); // 숫자 형변환에 실패하여 NaN이 들어간 경우 400 리턴
 
-  res.json(users.slice(0, limit));
+  // SELECT * FROM users;
+  models.User.findAll({}).then(users => {
+    res.json(users);
+  });
 };
 const show = (req, res) => {
   const p_id = parseInt(req.params.id, 10); // 문자열 id를 숫자열로 변환
