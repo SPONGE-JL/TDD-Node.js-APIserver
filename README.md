@@ -141,3 +141,30 @@ TDD 개발을 위하여 node에서 제공하는 라이브러리
   # 설치 : 개발환경에서만 사용하는 의존모듈임을 명시하여 설치
   yarn add supertest --save-dev
 ```
+
+### Node.js ORM library : Sequelize.js
+
+시퀄라이즈(sequelize.js)를 사용하면 데이터베이스의 테이블을 추상화한 `Model`을 이용하여 `자동으로 SQL을 생성하는 함수를 호출`한다.
+
+```bash
+  # 시퀄라이즈 설치
+  yarn add sequelize
+  # 시퀄라이즈가 동기화할때 사용할 파일기반 DB 라이브러리 설치
+  yarn add sqlite
+```
+
+SQL로 수행하는 CRUDS는 아래와 같이 함수로 대체 호출해서 생성된다.
+
+```javascript
+// SELECT * FROM users;
+User.findAll();
+
+// INSERT users (`name`) VALUES ('alice');
+User.create({ name: "alice" });
+
+// UPDATE users SET name = 'bek' WHERE id = 1;
+User.update({ name: "bek" }, { where: { id: 1 } });
+
+// DELETE FROM users WHERE id = 1;
+User.destroy({ where: { id: 1 } });
+```

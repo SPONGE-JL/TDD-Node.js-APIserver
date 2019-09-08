@@ -1,11 +1,17 @@
-/* 
- # SuperTest.js를 이용하여 테스트 코드 작성
- ? ./node_modules/.bin/mocha ./app.spec.js
+/*
+ * Test Code [/users/**]
  */
 const should = require("should");
 const request = require("supertest");
 
-const app = require("./app");
+const app = require("../../app");
+const models = require("../../data/sequelize-define");
+
+// ! DB sync (데이터 동기화를 동기처리)
+before(() => models.sequelize.sync({ force: true }));
+// ! Insert Sample Data
+const users = [{ name: "alice" }, { name: "bek" }, { name: "chris" }];
+before(() => models.User.bulkCreate(users));
 
 // # TDD-1 GET
 describe("GET /users 는", () => {
@@ -135,6 +141,7 @@ describe("PUT /users/:id 는", () => {
       request(app)
         .put("/users/3")
         .send({ name })
+        .expect(201)
         .end((err, res) => {
           res.body.should.have.property("name", name);
           done();
@@ -166,8 +173,8 @@ describe("PUT /users/:id 는", () => {
     });
     it("이름이 중복일 경우 409 응답한다.", done => {
       request(app)
-        .put("/users/5")
-        .send({ name: "burky" })
+        .put("/users/3")
+        .send({ name: "chenn" })
         .expect(409)
         .end(done);
     });

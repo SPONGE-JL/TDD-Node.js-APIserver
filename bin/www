@@ -8,6 +8,10 @@ var app = require("../app");
 var debug = require("debug")("tdd-nodejs-apiserver:server");
 var http = require("http");
 
+var syncDB = require("../data/sequelize-sync");
+
+var server;
+
 /**
  * Get port from environment and store in Express.
  */
@@ -15,19 +19,31 @@ var http = require("http");
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
 
-/**
- * Create HTTP server.
+/*
+ * Succecc to Sync Database
  */
+syncDB().then(() => {
+  console.log("\nSync Database - Sequelize/Sqlite\n");
 
-var server = http.createServer(app);
+  /**
+   * Create HTTP server.
+   */
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+  server = http.createServer(app);
 
-server.listen(port);
-server.on("error", onError);
-server.on("listening", onListening);
+  /**
+   * Listen on provided port, on all network interfaces.
+   */
+
+  server.listen(port);
+  server.on("error", onError);
+  server.on("listening", onListening);
+
+  /*
+   * Success to Run Application
+   */
+  console.log("TDD-NodeJS-APIserver is running!\n");
+});
 
 /**
  * Normalize a port into a number, string, or false.
