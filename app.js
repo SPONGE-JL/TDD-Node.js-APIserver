@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 
+// # TDD-1
 app.get("/users", (req, res) => {
   req.query.limit = req.query.limit || 10; // undefined이면 10으로 저장
   const limit = parseInt(req.query.limit, 10); // 10진수로 변환
@@ -29,6 +30,13 @@ app.get("/users", (req, res) => {
   if (Number.isNaN(limit)) return res.status(400).end();
 
   res.json(users.slice(0, limit));
+});
+
+// # TDD-2
+app.get("/users/:id", (req, res) => {
+  const p_id = parseInt(req.params.id, 10);
+  const f_user = users.filter(user => user.id === p_id)[0];
+  res.json(f_user);
 });
 
 module.exports = app;

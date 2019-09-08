@@ -7,6 +7,7 @@ const request = require("supertest");
 
 const app = require("./app");
 
+// # TDD-1
 describe("GET /users 는", () => {
   describe("성공시", () => {
     // ? TestCase
@@ -35,6 +36,20 @@ describe("GET /users 는", () => {
         .get("/users?limit=two")
         .expect(400)
         .end(done);
+    });
+  });
+});
+
+// # TDD-2
+describe("GET /users/1 는", () => {
+  describe("성공시", () => {
+    it("id가 1인 유저 객체를 반환한다", done => {
+      request(app)
+        .get("/users/1")
+        .end((err, res) => {
+          res.body.should.have.property("id", 1);
+          done();
+        });
     });
   });
 });
