@@ -64,4 +64,13 @@ app.post("/users", (req, res) => {
   res.status(201).json(user);
 });
 
+// # TDD-4 PUT
+app.put("/users/:id", (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  const name = req.body.name;
+  const user = users.filter(user => user.id === id)[0]; // 검색
+  user.name = name; // 수정
+  res.json(user);
+});
+
 module.exports = app;

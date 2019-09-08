@@ -126,3 +126,17 @@ describe("POST /users 는", () => {
     });
   });
 });
+
+// # TDD-4 PUT
+describe("PUT /users/:id 는", () => {
+  let name = "chally";
+  it("변경된 name을 응답한다.", done => {
+    request(app)
+      .put("/users/3")
+      .send({ name })
+      .end((err, res) => {
+        res.body.should.have.property("name", name);
+        done();
+      });
+  });
+});
