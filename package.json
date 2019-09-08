@@ -1,5 +1,5 @@
 {
-  "name": "TDD-NodeJS-APIserver",
+  "name": "tdd-nodejs-apiserver",
   "version": "1.0.0",
   "description": "For RestAPI",
   "main": "index.js",
