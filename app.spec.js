@@ -129,14 +129,47 @@ describe("POST /users 는", () => {
 
 // # TDD-4 PUT
 describe("PUT /users/:id 는", () => {
-  let name = "chally";
-  it("변경된 name을 응답한다.", done => {
-    request(app)
-      .put("/users/3")
-      .send({ name })
-      .end((err, res) => {
-        res.body.should.have.property("name", name);
-        done();
-      });
+  describe("성공시", () => {
+    let name = "chenn";
+    it("변경된 name을 응답한다.", done => {
+      request(app)
+        .put("/users/3")
+        .send({ name })
+        .end((err, res) => {
+          res.body.should.have.property("name", name);
+          done();
+        });
+    });
+  });
+});
+
+describe("PUT /users/:id 는", () => {
+  describe("실패시", () => {
+    it("정수가 아닌 id인 경우 400을 응답한다.", done => {
+      request(app)
+        .put("/users/one")
+        .expect(400)
+        .end(done);
+    });
+    it("전달받은 name이 없을 경우 400을 응답한다.", done => {
+      request(app)
+        .put("/users/1")
+        .expect(400)
+        .end(done);
+    });
+    it("없는 유저일 경우 404 응답한다.", done => {
+      request(app)
+        .put("/users/999")
+        .send({ name: "foo" })
+        .expect(404)
+        .end(done);
+    });
+    it("이름이 중복일 경우 409 응답한다.", done => {
+      request(app)
+        .put("/users/5")
+        .send({ name: "burky" })
+        .expect(409)
+        .end(done);
+    });
   });
 });

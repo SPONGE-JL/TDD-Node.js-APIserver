@@ -67,9 +67,19 @@ app.post("/users", (req, res) => {
 // # TDD-4 PUT
 app.put("/users/:id", (req, res) => {
   const id = parseInt(req.params.id, 10);
+  if (Number.isNaN(id)) return res.status(400).end(); // 숫자열 변환에 실패한 경우 400 리턴
+
   const name = req.body.name;
+  if (!name) return res.status(400).end(); // 전달받은 문자열이 없을 경우 400 리턴
+
+  const isConflict = users.filter(user => user.name === name).length;
+  if (isConflict) return res.status(409).end(); // 중복되는 경우 409 리턴
+
   const user = users.filter(user => user.id === id)[0]; // 검색
+  if (!user) return res.status(404).end(); // 검색결과 없는 유저일 경우  404 리턴
+
   user.name = name; // 수정
+
   res.json(user);
 });
 
