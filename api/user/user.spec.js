@@ -8,13 +8,16 @@ const app = require("../../app");
 const models = require("../../data/sequelize-define");
 
 // # TDD-1 GET
-describe("GET /users 는", () => {
+// > mocha의 only함수를 이용하여 단독체크
+describe.only("GET /users 는", () => {
   describe("성공시", () => {
     // ! DB sync (데이터 동기화를 동기처리)
     before(() => models.sequelize.sync({ force: true }));
-    // ? TestCase : mocha의 only함수를 이용하여 단독체크
-    it.only("유저 객체를 담은 배열로 응답한다", done => {
-      //it("유저 객체를 담은 배열로 응답한다", done => {
+    // ! Insert Sample Data
+    const users = [{ name: "alice" }, { name: "bek" }, { name: "chris" }];
+    before(() => models.User.bulkCreate(users));
+    // ? TestCase
+    it("유저 객체를 담은 배열로 응답한다", done => {
       request(app)
         .get("/users")
         .end((err, res) => {

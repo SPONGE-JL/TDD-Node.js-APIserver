@@ -13,7 +13,9 @@ const index = (req, res) => {
   if (Number.isNaN(limit)) return res.status(400).end(); // 숫자 형변환에 실패하여 NaN이 들어간 경우 400 리턴
 
   // SELECT * FROM users;
-  models.User.findAll({}).then(users => {
+  models.User.findAll({
+    limit: limit
+  }).then(users => {
     res.json(users);
   });
 };
