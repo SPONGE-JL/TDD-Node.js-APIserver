@@ -1,5 +1,9 @@
-const models = require("../sequelize_sqlite");
+const models = require("./sequelize-define");
 
 module.exports = () => {
-  return models.sequelize.sync({ force: true });
+  const options = {
+    // TEST 모드 일 때만 DB를 초기화 하는 코드
+    force: process.env.NODE_ENV === "test" ? true : false
+  };
+  return models.sequelize.sync(options);
 };
